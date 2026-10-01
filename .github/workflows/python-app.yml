@@ -39,7 +39,7 @@ jobs:
           from: ${{ secrets.EMAIL_USERNAME }}
 
           # Destinatário
-          to: destinatario@email.com
+          to: arthurthomasluz25@gmail.com
 
           # Assunto
           subject: "Email automático - GitHub Actions"
