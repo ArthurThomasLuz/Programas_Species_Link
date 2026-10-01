@@ -1,0 +1,57 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Enviar email agendado
+
+on:
+  schedule:
+    # 09:00 no horário de Brasília (UTC-3)
+    # GitHub Actions utiliza UTC
+    - cron: '0 12 1 10 *'
+
+  # Permite executar manualmente pelo GitHub
+  workflow_dispatch:
+
+jobs:
+  enviar-email:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Enviar email
+        uses: dawidd6/action-send-mail@v3
+
+        with:
+          # Servidor SMTP do Gmail
+          server_address: smtp.gmail.com
+
+          # Porta SMTP segura
+          server_port: 465
+
+          # Usuário do Gmail armazenado nos Secrets
+          username: ${{ secrets.EMAIL_USERNAME }}
+
+          # Senha de aplicativo armazenada nos Secrets
+          password: ${{ secrets.EMAIL_PASSWORD }}
+
+          # Remetente
+          from: ${{ secrets.EMAIL_USERNAME }}
+
+          # Destinatário
+          to: destinatario@email.com
+
+          # Assunto
+          subject: "Email automático - GitHub Actions"
+
+          # Corpo do email
+          body: |
+            Olá!
+
+            Este é um email enviado automaticamente pelo GitHub Actions.
+
+            Data programada:
+            01/10/2026 às 09:00 (horário de Brasília).
+
+            Atenciosamente,
+            GitHub Actions
